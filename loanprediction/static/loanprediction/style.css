@@ -1,0 +1,83 @@
+body {
+    background-color: rgb(228, 227, 227);
+}
+
+#division {
+    display: flex;
+    flex-direction: row;
+    margin-left: 60px;
+}
+
+#top-content {
+    width: 80%;
+}
+
+header{
+    margin-top: 30px;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-right: 70px;
+    margin-left: -105px;
+}
+
+#home-img {
+    width: 100px;
+    height: 100px;
+    margin-top: -40px;
+}
+
+#loan_img {
+    width: 600px;
+    height: 680px;
+    clip-path: polygon(7% 0%, 100% 0%, 100% 100%, 0% 100%) ;
+}
+
+.nav-element{
+    font-size: medium;
+    color: rgb(75, 74, 74);
+}
+
+a:hover {
+    background-color: #dc3545;
+    text-decoration: none;
+}
+
+#middle-content {
+    padding-top: 90px;
+    padding-right: 40px;
+}
+
+.center {
+    text-align: center;
+}
+
+.justify {
+    text-align: justify;
+}
+
+#action-button {
+    margin-top: 30px;
+    padding: 10px 30px;
+}
+
+#desc {
+    margin-top: 25px;
+    line-height: 30px;
+}
+
+.danger {
+    color: #dc3545;
+}
+
+.line {
+    line-height: 15px;
+}
+
+#main-content {
+    margin-left: 90px;
+    margin-right: 90px;
+}

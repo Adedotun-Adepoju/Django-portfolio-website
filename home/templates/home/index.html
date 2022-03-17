@@ -1,0 +1,166 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'home/style.css' %}">
+        <title>Dotun Adepoju</title>
+    </head>
+    <body>
+        <header style="background-image: url({% static 'home/img/header.jpg' %});">
+            <nav id="nav-bar">
+                <div id="nav-name">
+                    <h3><a class="text" href="#">ADEDOTUN ADEPOJU</a></h3>
+                </div>
+                <div id="nav-action">
+                    <h3><a class="text" href="#about">About</a></h3>
+                    <h3><a class="text" href="#projects">Projects</a></h3>
+                    <h3><a class="text" href="#certifications">Certifications</h3>
+                    <h3><a class="text" href="#">Contact</a></h3>                
+                </div>
+            </nav>
+            <section id="welcome" class="welcome">
+                <h3 class="text">HEY! I'M ADEDOTUN</h3>
+                <hr>
+                <p class="text">Creating solutions to problems by harnessing the power of data</p>
+                <br>
+            </section>    
+        </header>
+        <section id="about">
+            <div id="text-container">
+                <p class="text">I am a data scientist with a passion for solving problems with data. I hold a bachelor's degree in Engineering (Electrical and Electronics Engineering, Covenant University).I am a fast learner and I relish learning new skills regularly. I primarily work with python for majority of my tasks. However, i posess other additional skills which are essential to thrive in the technology space. My current expertise include:</p>
+            </div>
+            <div id="skills-1">
+                <div class="table-skills">
+                    <div class="table-head">
+                        <h3 class="text">Data cleaning</h3>
+                    </div>
+                    <div class="table-rest">
+                        <ul>
+                            <li class="text">Python</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="middle-table"class="table-skills">
+                    <div class="table-head">
+                        <h3 class="text">Data visualization</h3>
+                    </div>
+                    <div class="table-rest">
+                        <ul>
+                            <li class="text">Python
+                                <ul>
+                                    <li>seaborn</li>
+                                    <li>matplotlib</li>
+                                </ul>
+                            </li>
+                            <li class="text">Tableau</li>
+                        </ul>
+                    </div>
+                </div> 
+                <div class="table-skills">
+                    <div class="table-head">
+                        <h3 class="text">Web development</h3>
+                    </div>
+                    <div class="table-rest">
+                        <ul>
+                            <li class="text">Frontend
+                                <ul>
+                                    <li>HTML</li>
+                                    <li>CSS</li>
+                                </ul>
+                            </li>
+                            <li class="text">Backend
+                                <ul>
+                                    <li>Django</li>
+                                    <li>Flask</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div> 
+            </div>
+            <div id="skills-2">
+                <div id="table-1" class="table-skills">
+                    <div class="table-head">
+                        <h3 class="text">Data manipulation & wrangling</h3>
+                    </div>
+                    <div class="table-rest">
+                        <ul>
+                            <li class="text">Python
+                                <ul>
+                                    <li>Numpy</li>
+                                    <li>Pandas</li>
+                                </ul>
+                            </li>
+                            <li class="text">SQL</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="table-2" class="table-skills">
+                    <div class="table-head">
+                        <h3 class="text">Creating & deploying ML models</h3>
+                    </div>
+                    <div class="table-rest">
+                        <ul>
+                            <li class="text">Python
+                                <ul>
+                                    <li>Scikit-learn</li>
+                                    <li>Tensorflow</li>
+                                    <li>Django</li>
+                                    <li>Flask</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>    
+            </div>
+        </section>
+        <section id="projects">
+            <h1><a href="{% url 'loanprediction:index' %}" target="_blank">loan prediction</a></h1>
+        </section>
+        <section id="certifications" style="background-image: url({% static 'home/img/certification.png' %});">
+            <div id="first-row">
+                <div class="columns" id="udacity">
+                    <a href="https://confirm.udacity.com/PUDRNKWV" target="_blank"><img class="cert-img" src="{% static 'home/img/udacit.JPG' %}" alt="Nanodegree certificate"></a>
+                    <a href="https://confirm.udacity.com/PUDRNKWV" target="_blank"><p class="text">Programming for Data Science with Python NanoDegree</p></a>
+                </div>
+                <div class="columns" id="IBM">
+                    <a href="https://www.credly.com/badges/f94fc942-4a74-47be-8fe3-e4fabd980c6b/linked_in_profile" target="_blank"><img class="cert-img" src="{% static 'home/img/ibm.png' %}" alt="IBM Artificial intelligence certificate"></a>
+                    <a href="https://www.credly.com/badges/f94fc942-4a74-47be-8fe3-e4fabd980c6b/linked_in_profile" target="_blank"><p class="text text-center cert-name">Artificial Intelligence Analyst</p></a>
+                </div>
+                <div class="columns" id="microsoft">
+                    <a href="https://www.credly.com/badges/62ae0594-8e50-4445-9c5e-c1220d82c03e/public_url" target="_blank"><img class="cert-img cert-name" src="{% static 'home/img/Microsoft.JPG' %}" alt="Microsoft azure data fundamentals certificate"></a>
+                    <a href="https://www.credly.com/badges/62ae0594-8e50-4445-9c5e-c1220d82c03e/public_url" target="_blank"><p class="text">Microsoft Certified Azure Data Fundamentals</p></a>
+                </div>
+            </div>
+            <div id="second-row">
+                <div class="columns coursera">
+                    <a href="https://coursera.org/share/8566bc8fef71b4f7bd0cd3ab65d39e2a" target="_blank"><img class="cert-img cert-name" src="{% static 'home/img/coursera.png' %}" alt="Nanodegree certificate"></a>
+                    <a href="https://coursera.org/share/8566bc8fef71b4f7bd0cd3ab65d39e2a" target="_blank"><p class="text text-center">Managing Big Data with MySQL</p></a>
+                </div>
+                <div class="columns coursera">
+                    <a href="https://coursera.org/share/99c2423076ed3ee30411f8a16f597e07" target="_blank"><img class="cert-img cert-name" src="{% static 'home/img/coursera.png' %}" alt="IBM Artificial intelligence certificate"></a>
+                    <a href="https://coursera.org/share/99c2423076ed3ee30411f8a16f597e07" target="_blank"><p class="text text-center">Neural networks and deep learning</p></a>
+                </div>
+                <div class="columns coursera">
+                    <a href="https://coursera.org/share/11447de8b21c69dbcb913ffbf0f7fc05" target="_blank"><img class="cert-img cert-name" src="{% static 'home/img/coursera.png' %}" alt="Microsoft azure data fundamentals certificate"></a>
+                    <a href="https://coursera.org/share/11447de8b21c69dbcb913ffbf0f7fc05" target="_blank"><p class="text">Intoduction to Tensorflow for Artificial Intelligence and Machine Learning</p></a>
+                </div>
+            </div>
+        </section>
+        <footer id="contact-me" style="background-image: url({% static 'home/img/certification.png' %});">
+            <div id="footer-desc">
+                <h3 class="text-center">Get In Touch!</h3>
+            </div>
+            <div id="footer-links">
+                <a></a>
+                <a></a>
+                <a></a>
+            </div>
+        </footer>
+    </body>
+</html>
