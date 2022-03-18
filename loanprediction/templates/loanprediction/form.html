@@ -19,103 +19,15 @@
     <main id="main-content">
         <a href="{% url 'loanprediction:index' %}"><button class="btn btn-primary">back</button></a>
         <div class="form-wrapper">
-            <form id="prediction-form">
+            <form id="prediction-form" action="{% url 'loanprediction:forms' %}" method="post">
+                {% csrf_token %}
                 <br>
-                <label for="gender">Gender</label>
-                <select required name="gender" id="gender" class="form-select form-select-lg mb-3">
-                    <option value="">-- Select gender --</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-
-                <label for="marital_status">Marital status</label>
-                <select required name="marital_status" id="marital status" class="form-select form-select-lg mb-3">
-                    <option value="">-- Select marital status --</option>
-                    <option value="Yes">Married</option>
-                    <option value="No">Not married</option>
-                </select>
-
-                <label for="dependents">Dependents</label>
-                <select required name="dependents" id="dependents" class="form-select form-select-lg mb-3">
-                    <option value="">-- Number of dependents --</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3+">More than two</option>
-                </select>
-
-                <label for="education">Education</label>
-                <select required name="education" id="education" class="form-select form-select-lg mb-3">
-                    <option value="">-- Are you a graduate --</option>
-                    <option value="Graduate">Yes</option>
-                    <option value="Not Graduate">No</option>
-                </select>
-
-                <label for="self_employed">Employment</label>
-                <select required name="self_employed" id="self_employed" class="form-select form-select-lg mb-3">
-                    <option value="">-- Are you self-employed --</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-
-                <label for="credit_history">Credit History</label>
-                <select required name="credit_history" id="credit_history" class="form-select form-select-lg mb-3">
-                    <option value="">-- Do you have an outstanding unpaid loan --</option>
-                    <option value="No">Yes</option>
-                    <option value="Yes">No</option>
-                </select>
-
-                <label for="property_area">Property Area</label>
-                <select required name="property_area" id="property_area" class="form-select form-select-lg mb-3" required>
-                    <option value="">-- Property area --</option>
-                    <option value="Urban">Urban</option>
-                    <option value="Semiurban">Semi-urban</option>
-                    <option value="Rural">Rural</option>
-                </select>
-
-                <label for="applicant-income">Income</label>
-                <input
-                    id="applicant-income"
-                    type="number"
-                    placeholder="Enter the amount you earn monthly"
-                    class="form-control"
-                    value="ApplicantIncome"
-                    required
-                />
-                <br>
-                <label for="Coapplicant-income">Coapplicant's Income</label>
-                <input
-                    id="coapplicantincome"
-                    value="CoapplicantIncome"
-                    type="number"
-                    placeholder="Enter the amount your Coapplicant earns monthly"
-                    class="form-control"
-                    required 
-                />
-                <br>
-                <label for="LoanAmount">Loan Amount</label>
-                <input
-                    id="LoanAmount"
-                    value="LoanAmount"
-                    type="number"
-                    placeholder="Enter the amount you are applying for"
-                    class="form-control"
-                    required 
-                />                
-                <br>
-                <label for="Loan_Amount_Term">Loan Term</label>
-                <input 
-                    id="Loan_Amount_Term"
-                    name="Loan_Amount_Term"
-                    type="number"
-                    placeholder="How many monthsdo you want to payback"
-                    class="form-control"
-                    required
-                />
-                <br>
+                {{ form }}
                 <button class="btn btn-danger center btn-block" type="submit">Predict</button>
             </form>
             <br>
         </div>
+
     </main>
     
 </body>
