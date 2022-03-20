@@ -81,3 +81,10 @@ a:hover {
     margin-left: 90px;
     margin-right: 90px;
 }
+
+.result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

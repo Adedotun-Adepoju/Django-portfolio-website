@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django import forms
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 gender_choices = (("","-- Select gender --"), ("Male","male"), ("Female","female"))
 marital_choices = (("", "-- Select marital status --"), ("Yes", "married"), ("No", "not married"))
@@ -25,17 +27,31 @@ class LoanFeatures(forms.Form):
 
 # Create your views here.
 def index(request):
+    if "features" not in request.session:
+        request.session["features"] = []
     return render(request, "loanprediction/index.html")
 
 def form(request):
-    clean_features = []
     if request.method == "POST":
         form = LoanFeatures(request.POST)
         if form.is_valid():
             features = ['gender','marital_status','dependents','education','employment','credit_history','property_area','income','coapplicant','amount','loan_term']
             for feat in features:
-                clean_features.append(form.cleaned_data[feat])
-
+                feature = form.cleaned_data[feat]
+                request.session["features"] += [feature]
+            return HttpResponseRedirect(reverse("loanprediction:result"))
+        else:
+            return render(request, "loanprediction/form.html", {
+                "form": form
+            })
     return render(request,"loanprediction/form.html", {
         "form": LoanFeatures()
+    })
+
+def result(request):
+    result = "Approved"
+    if "features" not in request.session:
+        request.session["features"] = []
+    return render(request, "loanprediction/result.html", {
+        'result': result
     })
