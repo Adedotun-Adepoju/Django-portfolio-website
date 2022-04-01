@@ -1,57 +1,87 @@
-from django.shortcuts import render
-from django import forms
-from django.http import HttpResponseRedirect
+from unittest import result
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.urls import reverse
 
-gender_choices = (("","-- Select gender --"), ("Male","male"), ("Female","female"))
-marital_choices = (("", "-- Select marital status --"), ("Yes", "married"), ("No", "not married"))
-dependents_choices = (("", "-- Number of dependents --"), ("0","None"), ("1", "One"), ("2", "Two"), ("3+", "More than two"))
-education_choices = (("", "-- Are you a graduate --"), ("Graduate", "Yes"), ("Not Graduate","No"))
-employment_choices = (("", "-- Are you self-employed --"), ("Yes", "Yes"), ("No", "No"))
-credit_choices = (("", "-- Do you have an outstanding unpaid loan --"), ("1.0", "Yes"), ("0.0","No"))
-property_choices = (("", "-- Property area --"), ("Urban","Urban"), ("Semiurban","Semi-Urban"), ("Rural", "Rural"))
+from .forms import ApplicantForm
+from .models import Applicants 
+from .serializers import ApplicantsSerializers
 
+from rest_framework import viewsets
+from rest_framework.decorators import api_view
+from django.core import serializers
+from rest_framework.response import Response 
+from rest_framework import status
+from django.templatetags.static import static
 
-class LoanFeatures(forms.Form):
-    gender = forms.ChoiceField(label = "Gender", choices = gender_choices, widget=forms.Select(attrs={'class':"form-select form-select-lg mb-3"}))
-    marital_status = forms.ChoiceField(label = "Marital status", choices = marital_choices, widget = forms.Select(attrs = {'class':"form-select form-select-lg mb-3"}))
-    dependents = forms.ChoiceField(label = "Dependents", choices = dependents_choices, widget = forms.Select(attrs = {'class':"form-select form-select-lg mb-3"}))
-    education = forms.ChoiceField(label = "Education", choices = education_choices, widget= forms.Select(attrs = {'class': "form-select form-select-lg mb-3"}))
-    employment = forms.ChoiceField(label = "Employment", choices = employment_choices, widget = forms.Select(attrs = {'class':"form-select form-select-lg mb-3"}))
-    credit_history = forms.ChoiceField(label = "Credit History", choices = credit_choices, widget = forms.Select(attrs = {'class':"form-select form-select-lg mb-3"}))
-    property_area = forms.ChoiceField(label = "Property Area", choices = property_choices, widget = forms.Select(attrs = {'class':"form-select form-select-lg mb-3"}))
-    income = forms.IntegerField(label = "Income", min_value=2, widget = forms.TextInput(attrs = {'class': "form-select form-select-lg mb-3"}))
-    coapplicant = forms.IntegerField(label = "Coapplicant's Income", widget = forms.TextInput(attrs = {'class':"form-select form-select-lg mb-3"}))
-    amount = forms.IntegerField(label = "Loan Amount", widget = forms.TextInput(attrs = {'class': "form-select form-select-lg mb-3"}))
-    loan_term = forms.IntegerField(label = "Loan_term", widget = forms.TextInput(attrs = {'class': "form-select form-select-lg mb-3"}))
+import pickle
+import json 
+import numpy as np 
+import pandas as pd 
+import sklearn
+import os 
+
+cwd = os.getcwd()
+
+class ApplicantsView(viewsets.ModelViewSet):
+    queryset = Applicants.objects.all()
+    serializer_class = ApplicantsSerializers
 
 # Create your views here.
+def status(features, ml_model, transformer):
+    try:
+        cols = ['Gender', 'Married', 'Dependents', 'Education', 'Self_Employed','ApplicantIncome', 'CoapplicantIncome', 'LoanAmount','Loan_Amount_Term', 'Credit_History','Property_Area']
+        
+        df = pd.DataFrame(data = np.array(features).reshape(1,-1), columns = cols)
+        
+        x_transform = transformer.transform(df)
+        y_pred  = ml_model.predict(x_transform) 
+
+        if y_pred == 1:
+            result = "Yes" 
+        else: 
+            result = "No"
+        return result
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
 def index(request):
-    if "features" not in request.session:
-        request.session["features"] = []
     return render(request, "loanprediction/index.html")
 
 def form(request):
     if request.method == "POST":
-        form = LoanFeatures(request.POST)
+        form = ApplicantForm(request.POST)
         if form.is_valid():
-            features = ['gender','marital_status','dependents','education','employment','credit_history','property_area','income','coapplicant','amount','loan_term']
-            for feat in features:
-                feature = form.cleaned_data[feat]
-                request.session["features"] += [feature]
-            return HttpResponseRedirect(reverse("loanprediction:result"))
+            gender = form.cleaned_data['gender']
+            marital_status = form.cleaned_data['marital_status']
+            dependents = form.cleaned_data['dependents']
+            education = form.cleaned_data["education"]
+            employment = form.cleaned_data["employment"]
+            applicantincome = int(form.cleaned_data["income"])
+            coapplicantincome = float(form.cleaned_data["coapplicant"])
+            loanamount = float(form.cleaned_data["amount"])
+            loanterm = float(form.cleaned_data["loan_term"])
+            credit_history = (form.cleaned_data["credit_history"])
+            property_area = form.cleaned_data["property_area"]
+
+            input_features = [gender, marital_status, dependents, education, employment , applicantincome, coapplicantincome, loanamount, loanterm, credit_history, property_area]
+            model = pickle.load(open(os.path.join(cwd, "loanprediction","model.sav"), 'rb'))
+            col_transformer = pickle.load(open(os.path.join(cwd,"loanprediction","column_transformer.p"),'rb'))            
+            print(input_features)
+            
+            result = status(features = input_features, ml_model= model, transformer=col_transformer)
+            print(result)
+            
+            return render(request, "loanprediction/result.html", {
+                "result": result,
+                "name": form.cleaned_data["firstname"]
+            })
         else:
             return render(request, "loanprediction/form.html", {
                 "form": form
             })
     return render(request,"loanprediction/form.html", {
-        "form": LoanFeatures()
+        "form": ApplicantForm()
     })
 
-def result(request):
-    result = "Approved"
-    if "features" not in request.session:
-        request.session["features"] = []
-    return render(request, "loanprediction/result.html", {
-        'result': result
-    })
+

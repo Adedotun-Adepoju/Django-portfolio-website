@@ -14,7 +14,7 @@
 <body>
     <header>
         <h2 class="center"><strong>Loan Prediction</strong></h2>
-        <h2 class="center">Fill the form for Prediction</h2>
+        <h2 class="center">Fill the form to check for your loan eligibility</h2>
     </header>
     <main id="main-content">
         <a href="{% url 'loanprediction:index' %}"><button class="btn btn-primary">back</button></a>
@@ -22,7 +22,7 @@
             <form id="prediction-form" action="{% url 'loanprediction:forms' %}" method="post">
                 {% csrf_token %}
                 <br>
-                {{ form }}
+                {{ form.as_p }}
                 <button class="btn btn-danger center btn-block" type="submit">Predict</button>
             </form>
             <br>

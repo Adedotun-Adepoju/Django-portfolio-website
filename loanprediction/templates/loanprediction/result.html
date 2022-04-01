@@ -14,15 +14,14 @@
 
     <body>
         <div class="result">
-            <div>
-                {{ result }}
-                <i class="fa-solid fa-circle-check"></i> 
-            </div>
-            <div>
-                {{ result }}
-                <i class="fa-solid fa-xmark"></i>
-            </div>       
+                <div class="status">
+                    {% if result == "Yes" %}                    
+                        <h2 class="center">Congrats {{ name }}</h2>
+                        <h2 class="center">You are eligible for the loan <i class="fa-solid fa-square-check"></i></h2>
+                    {% else %}
+                        <h2 class="center">Oops sorry {{ name }}</h2>
+                        <h2 class="center"> You are not eligible for the loan</h2>      
+                    {% endif %}
+                </div>
         </div>
-
-
     </body>
