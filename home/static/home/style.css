@@ -1,5 +1,4 @@
 header {
-    background: url("{{STATIC_URL}}home/img/header.jpg");
     background-position: center;
     background-size: cover;
     min-height: auto;
